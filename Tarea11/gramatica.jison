@@ -32,16 +32,16 @@
 %%
 
 ini : 
-      exp EOF { console.log($1); }
+      exp EOF { console.log($1.C3D); }
     ;
 
 exp :
-      exp MAS exp       { $$ = new_nodo(new_temp(), $1.C3D + $3.C3D + $$.tmp + " = " + $1.tmp + " + " + $3.tmp); }
-    | exp MENOS exp     { $$ = new_nodo(new_temp(), $1.C3D + $3.C3D + $$.tmp + " = " + $1.tmp + " - " + $3.tmp); }
-    | exp DIV exp       { $$ = new_nodo(new_temp(), $1.C3D + $3.C3D + $$.tmp + " = " + $1.tmp + " / " + $3.tmp); }
-    | exp MUL exp       { $$ = new_nodo(new_temp(), $1.C3D + $3.C3D + $$.tmp + " = " + $1.tmp + " * " + $3.tmp); }
+      exp MAS exp       { var tp = new_temp(); $$ = new_nodo(tp, $1.C3D + $3.C3D + tp + " = " + $1.tmp + " + " + $3.tmp + "\r\n"); }
+    | exp MENOS exp     { var tp = new_temp(); $$ = new_nodo(tp, $1.C3D + $3.C3D + tp + " = " + $1.tmp + " - " + $3.tmp + "\r\n"); }
+    | exp DIV exp       { var tp = new_temp(); $$ = new_nodo(tp, $1.C3D + $3.C3D + tp + " = " + $1.tmp + " / " + $3.tmp + "\r\n"); }
+    | exp MUL exp       { var tp = new_temp(); $$ = new_nodo(tp, $1.C3D + $3.C3D + tp + " = " + $1.tmp + " * " + $3.tmp + "\r\n"); }
     | LPAR exp RPAR     { $$ = new_nodo($2.tmp, $2.C3D); }
-    | ENTERO            { $$ = new_nodo(Number($1), " "); }
+    | ENTERO            { $$ = new_nodo(Number($1), ""); }
     ;
 
 %%
@@ -62,5 +62,5 @@ function new_nodo(tmp, C3D){
 
 function new_temp(){
     temp = temp + 1; 
-    return temp;
+    return "t" + temp;
 }
